@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ZestyBite — Order Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #ff8c00;
+  --orange-bright: #ffaa33;
+  --orange-deep: #e07800;
+  --bg: #0d0d14;
+  --bg2: #13131e;
+  --bg3: #1a1a2a;
+  --bg4: #22223a;
+  --text: #f0f0f8;
+  --muted: #7a7a9a;
+  --border: #2a2a40;
+  --success: #22c55e;
+  --card-r: 18px;
+  --btn-r: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+/* ─── HEADER ─────────────────────────────────────────────────────────────── */
+.header {
+  background: var(--bg2);
+  border-bottom: 2px solid var(--orange);
+  padding: 14px 18px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.brand-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.logo {
+  width: 46px; height: 46px;
+  background: var(--orange);
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(255,140,0,0.4);
+}
+.brand-name { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: #fff; }
+.brand-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.step-badge {
+  margin-left: auto;
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.step-badge span { color: var(--orange); font-weight: 700; }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--bg);
+  border-radius: 12px 12px 0 0;
+  padding: 6px 6px 0;
+  margin: 0 -18px;
+}
+.tab {
+  flex: 1;
+  padding: 9px 4px 11px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: color .2s, background .2s;
+  letter-spacing: .3px;
+}
+.tab.active {
+  background: var(--bg2);
+  color: var(--orange);
+  border-bottom: 2px solid var(--orange);
+  margin-bottom: -2px;
+}
+
+/* ─── PAGES ───────────────────────────────────────────────────────────────── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ─── LOGIN PAGE ──────────────────────────────────────────────────────────── */
+.login-wrap {
+  min-height: calc(100dvh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+}
+.login-card {
+  background: var(--bg2);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  padding: 36px 28px 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+.login-icon { font-size: 48px; text-align: center; margin-bottom: 16px; }
+.login-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.login-sub { font-size: 14px; color: var(--muted); text-align: center; margin-bottom: 28px; }
+
+.field-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+  display: block;
+}
+.field-wrap { margin-bottom: 18px; }
+.field-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 16px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.field-input:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255,140,0,0.15);
+}
+.field-input::placeholder { color: var(--muted); }
+
+.btn-primary {
+  width: 100%;
+  padding: 15px;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: var(--btn-r);
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, transform .1s, box-shadow .2s;
+  letter-spacing: .5px;
+  box-shadow: 0 6px 20px rgba(255,140,0,0.3);
+}
+.btn-primary:active { background: var(--orange-deep); transform: scale(.98); }
+.btn-primary:hover { background: var(--orange-bright); }
+.btn-primary:disabled { background: #333; color: #666; box-shadow: none; cursor: not-allowed; }
+
+.error-msg {
+  background: rgba(220,50,50,.12);
+  border: 1px solid rgba(220,50,50,.3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #ff6b6b;
+  margin-bottom: 16px;
+  display: none;
+}
+.register-link {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.register-link a { color: var(--orange); font-weight: 600; cursor: pointer; text-decoration: none; }
+
+/* ─── NAME PAGE ────────────────────────────────────────────────────────────── */
+.name-wrap {
+  min-height: calc(100dvh - 80px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px 20px;
+}
+.name-card {
+  background: var(--bg2);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  padding: 36px 28px 32px;
+  width: 100%; max-width: 400px;
+  text-align: center;
+}
+.name-emoji { font-size: 52px; margin-bottom: 16px; }
+.name-title { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+.name-sub { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+
+/* ─── MENU PAGE ────────────────────────────────────────────────────────────── */
+.menu-section { padding: 16px 14px 120px; }
+.section-heading {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.card {
+  background: var(--bg2);
+  border-radius: var(--card-r);
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color .2s, transform .15s, box-shadow .2s;
+  user-select: none;
+}
+.card:active { transform: scale(.96); }
+.card.in-cart {
+  border-color: var(--orange);
+  box-shadow: 0 4px 20px rgba(255,140,0,0.2);
+}
+.card-img {
+  background: var(--bg4);
+  height: 90px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44px;
+  transition: background .2s;
+}
+.card:active .card-img { background: var(--bg3); }
+.card-body { padding: 10px 12px 12px; }
+.card-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; line-height: 1.3; }
+.card-price { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--orange); }
+.card-qty-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.qty-btn {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  flex-shrink: 0;
+}
+.qty-btn.plus { background: var(--orange); color: #fff; }
+.qty-btn.plus:active { background: var(--orange-deep); transform: scale(.9); }
+.qty-btn.minus { background: var(--bg4); color: var(--text); }
+.qty-btn.minus:active { transform: scale(.9); }
+.qty-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: #fff; min-width: 18px; text-align: center;
+}
+.tap-hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+/* ─── CART BAR ─────────────────────────────────────────────────────────────── */
+.cart-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--bg2);
+  border-top: 2px solid var(--border);
+  padding: 14px 16px 20px;
+  z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.cart-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.cart-count { font-size: 13px; color: var(--muted); }
+.cart-count strong { color: var(--orange); }
+.cart-price { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--orange); }
+
+/* ─── CHECKOUT MODAL ───────────────────────────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 300;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.show { display: flex; }
+.modal-sheet {
+  background: var(--bg2);
+  border-radius: 24px 24px 0 0;
+  padding: 28px 22px 36px;
+  width: 100%; max-width: 480px;
+  animation: slideUp .25s ease;
+}
+@keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.modal-handle {
+  width: 40px; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 0 auto 22px;
+}
+.modal-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+
+.pill-row { display: flex; gap: 8px; margin-bottom: 18px; }
+.pill {
+  flex: 1;
+  padding: 11px 6px;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer; text-align: center;
+  transition: all .15s;
+}
+.pill.sel { border-color: var(--orange); background: rgba(255,140,0,.12); color: var(--orange); }
+
+.order-summary {
+  background: var(--bg3);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.summary-row {
+  display: flex; justify-content: space-between;
+  font-size: 13px; padding: 4px 0;
+}
+.summary-row .label { color: var(--muted); }
+.summary-total {
+  display: flex; justify-content: space-between;
+  font-family: 'Syne', sans-serif;
+  font-size: 18px; font-weight: 800;
+  border-top: 1px solid var(--border);
+  padding-top: 10px; margin-top: 8px;
+}
+.summary-total .val { color: var(--orange); }
+
+.btn-cancel {
+  width: 100%; padding: 12px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; cursor: pointer;
+  margin-top: 10px;
+}
+
+/* ─── SUCCESS VIEW ─────────────────────────────────────────────────────────── */
+.success-view {
+  display: none;
+  text-align: center;
+  padding: 10px 0 8px;
+}
+.success-lottie { font-size: 64px; margin-bottom: 14px; animation: pop .4s ease; }
+@keyframes pop { 0%{transform:scale(0)} 80%{transform:scale(1.15)} 100%{transform:scale(1)} }
+.success-title { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: var(--success); margin-bottom: 8px; }
+.success-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.order-id { display: inline-block; background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 12px; font-weight: 700; color: var(--orange); margin-top: 12px; font-family: 'Syne', sans-serif; }
+
+/* ─── RECEIPT TAB ──────────────────────────────────────────────────────────── */
+.receipt-section { padding: 18px 14px 40px; }
+.receipt-card {
+  background: var(--bg2);
+  border-radius: var(--card-r);
+  overflow: hidden;
+}
+.receipt-header-bar {
+  background: var(--orange);
+  padding: 22px 20px 18px;
+  text-align: center;
+}
+.r-logo { font-size: 36px; margin-bottom: 4px; }
+.r-brand { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: #fff; }
+.r-badge { display: inline-block; background: #fff; color: var(--orange); border-radius: 20px; padding: 4px 14px; font-size: 11px; font-weight: 800; margin-top: 8px; }
+.receipt-body { padding: 18px; }
+.r-info { background: var(--bg3); border-radius: 12px; padding: 14px; margin-bottom: 16px; }
+.r-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; }
+.r-row .lbl { color: var(--muted); }
+.r-items { margin-bottom: 14px; }
+.r-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.r-item-price { color: var(--orange); font-weight: 700; }
+.r-totals { background: var(--bg3); border-radius: 12px; padding: 14px; }
+.r-total-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; color: var(--muted); }
+.r-grand { display: flex; justify-content: space-between; padding: 12px 0 4px; font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; border-top: 2px solid var(--orange); margin-top: 8px; }
+.r-grand .val { color: var(--orange); }
+.r-footer { text-align: center; padding: 18px; color: var(--muted); font-size: 13px; }
+.r-footer b { color: var(--orange); }
+.r-empty { text-align: center; padding: 60px 20px; }
+.r-empty-icon { font-size: 52px; margin-bottom: 14px; opacity: .5; }
+.r-empty-text { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: var(--muted); }
+.r-empty-sub { font-size: 13px; color: var(--border); margin-top: 6px; }
+
+/* ─── REGISTER MODAL ───────────────────────────────────────────────────────── */
+.reg-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER (always visible) -->
+<div class="header" id="header">
+  <div class="brand-row">
+    <div class="logo">👨‍🍳</div>
+    <div>
+      <div class="brand-name">ZestyBite</div>
+      <div class="brand-sub">Your favourite meals, one tap away</div>
+    </div>
+    <div class="step-badge" id="step-badge">Step <span id="step-num">1</span>/3</div>
+  </div>
+  <!-- Menu tabs only shown on menu page -->
+  <div class="tabs" id="menu-tabs" style="display:none">
+    <button class="tab active" onclick="switchTab(0)" id="tab0">🍔 Food</button>
+    <button class="tab" onclick="switchTab(1)" id="tab1">🥤 Drinks</button>
+    <button class="tab" onclick="switchTab(2)" id="tab2">🍟 Sides</button>
+    <button class="tab" onclick="switchTab(3)" id="tab3">🧾 Receipt</button>
+  </div>
+</div>
+
+<!-- ─────────────────── PAGE 1: LOGIN ─────────────────────────────────── -->
+<div class="page active" id="pg-login">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-icon">🔐</div>
+      <h1 class="login-title">Welcome back</h1>
+      <p class="login-sub">Sign in to start ordering</p>
+      <div class="error-msg" id="login-error"></div>
+      <div class="field-wrap">
+        <label class="field-label">Username</label>
+        <input class="field-input" id="inp-user" type="text" placeholder="Enter your username" autocomplete="username" autocapitalize="none">
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">Password</label>
+        <input class="field-input" id="inp-pass" type="password" placeholder="Enter your password" autocomplete="current-password">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Sign In →</button>
+      <div class="register-link">No account? <a onclick="showRegister()">Register here</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────── PAGE 2: ENTER NAME ─────────────────────────────── -->
+<div class="page" id="pg-name">
+  <div class="name-wrap">
+    <div class="name-card">
+      <div class="name-emoji">🍽</div>
+      <h1 class="name-title">What's your name?</h1>
+      <p class="name-sub">We'll put this on your receipt</p>
+      <div class="field-wrap">
+        <input class="field-input" id="inp-name" type="text" placeholder="Your first name" autocomplete="given-name" style="text-align:center;font-size:17px">
+      </div>
+      <button class="btn-primary" onclick="doName()">Start Ordering →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────── PAGE 3: MENU ───────────────────────────────────── -->
+<div class="page" id="pg-menu">
+  <!-- Tab sections -->
+  <div id="sec0" class="menu-section"><p class="section-heading">🍔 Food</p><div class="grid" id="food-grid"></div></div>
+  <div id="sec1" class="menu-section" style="display:none"><p class="section-heading">🥤 Drinks</p><div class="grid" id="drinks-grid"></div></div>
+  <div id="sec2" class="menu-section" style="display:none"><p class="section-heading">🍟 Sides</p><div class="grid" id="sides-grid"></div></div>
+  <div id="sec3" class="receipt-section" style="display:none">
+    <div id="receipt-content"></div>
+  </div>
+
+  <!-- Cart bar -->
+  <div class="cart-bar" id="cart-bar">
+    <div class="cart-row">
+      <span class="cart-count"><strong id="cart-count-num">0</strong> items</span>
+      <span class="cart-price" id="cart-price-display">$0.00</span>
+    </div>
+    <button class="btn-primary" id="btn-checkout" disabled onclick="openCheckout()">Place Order →</button>
+  </div>
+</div>
+
+<!-- ─────────────────── CHECKOUT MODAL ─────────────────────────────────── -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+
+    <!-- Form view -->
+    <div id="checkout-form-view">
+      <div class="modal-title">Complete Your Order</div>
+
+      <label class="field-label">Service Type</label>
+      <div class="pill-row">
+        <button class="pill sel" id="pill-takeout" onclick="selSvc(this,'Take Out')">Take Out</button>
+        <button class="pill" id="pill-dinein" onclick="selSvc(this,'Dine In')">Dine In</button>
+      </div>
+
+      <label class="field-label">Payment Method</label>
+      <div class="pill-row">
+        <button class="pill sel" id="pill-cash" onclick="selPay(this,'Cash')">Cash</button>
+        <button class="pill" id="pill-card" onclick="selPay(this,'Card')">Card</button>
+      </div>
+
+      <div class="order-summary" id="order-summary-box"></div>
+
+      <button class="btn-primary" onclick="submitOrder()">✔ Confirm Order</button>
+      <button class="btn-cancel" onclick="closeCheckout()">Cancel</button>
+    </div>
+
+    <!-- Success view -->
+    <div class="success-view" id="success-view">
+      <div class="success-lottie">🎉</div>
+      <div class="success-title">Order Sent!</div>
+      <div class="success-sub">Your order has been sent to the kitchen.<br>Please wait for your name to be called.</div>
+      <div class="order-id" id="success-order-id"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────────── REGISTER MODAL ─────────────────────────────────── -->
+<div class="modal-overlay" id="register-modal">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Create Account</div>
+    <div class="error-msg" id="reg-error"></div>
+    <div class="field-wrap">
+      <label class="field-label">Username</label>
+      <input class="field-input" id="reg-user" type="text" placeholder="Choose a username" autocapitalize="none">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Password</label>
+      <input class="field-input" id="reg-pass" type="password" placeholder="Min 3 characters">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Confirm Password</label>
+      <input class="field-input" id="reg-conf" type="password" placeholder="Repeat password">
+    </div>
+    <button class="btn-primary" onclick="doRegister()">Create Account</button>
+    <button class="btn-cancel" onclick="closeRegister()">Cancel</button>
+    <p class="reg-note">Accounts are stored on this device only.</p>
+  </div>
+</div>
+
+<script>
+// ─── State ────────────────────────────────────────────────────────────────────
+var menu = {};
+var cart = {};
+var svc = 'Take Out';
+var pay = 'Cash';
+var customerName = '';
+var lastReceipt = null;
+var ACCOUNTS_KEY = 'zb_accounts_v1';
+
+// ─── Account helpers (stored in localStorage) ─────────────────────────────────
+function loadAccounts() {
+  try { return JSON.parse(localStorage.getItem(ACCOUNTS_KEY)) || []; } catch(e) { return []; }
+}
+function saveAccounts(accs) {
+  localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accs));
+}
+function findAccount(user, pass) {
+  return loadAccounts().find(function(a){ return a.username === user && a.password === pass; });
+}
+
+// ─── Login ────────────────────────────────────────────────────────────────────
+function doLogin() {
+  var user = document.getElementById('inp-user').value.trim();
+  var pass = document.getElementById('inp-pass').value;
+  var err = document.getElementById('login-error');
+  err.style.display = 'none';
+
+  if (!user || !pass) { showErr(err, 'Please enter your username and password.'); return; }
+
+  // Check accounts (default Admin/123 always exists)
+  var accs = loadAccounts();
+  if (!accs.find(function(a){ return a.username === 'Admin'; })) {
+    accs.push({ username: 'Admin', password: '123' });
+    saveAccounts(accs);
+  }
+
+  var found = findAccount(user, pass);
+  if (!found) {
+    var userExists = loadAccounts().find(function(a){ return a.username === user; });
+    showErr(err, userExists ? 'Wrong password. Try again.' : 'Username not found.');
+    return;
+  }
+
+  // Logged in — go to name page
+  goToPage('pg-name');
+  document.getElementById('step-num').textContent = '2';
+  setTimeout(function(){ document.getElementById('inp-name').focus(); }, 300);
+}
+
+// ─── Name ─────────────────────────────────────────────────────────────────────
+function doName() {
+  var name = document.getElementById('inp-name').value.trim();
+  if (!name) {
+    document.getElementById('inp-name').style.borderColor = '#ff4444';
+    document.getElementById('inp-name').focus();
+    return;
+  }
+  customerName = name;
+  goToPage('pg-menu');
+  document.getElementById('step-num').textContent = '3';
+  document.getElementById('step-badge').style.display = 'none';
+  document.getElementById('menu-tabs').style.display = 'flex';
+  loadMenu();
+}
+
+// ─── Menu loading ─────────────────────────────────────────────────────────────
+function loadMenu() {
+  fetch('/api/menu')
+    .then(function(r){ return r.json(); })
+    .then(function(m) {
+      menu = m;
+      renderGrid(m.food,   'food-grid');
+      renderGrid(m.drinks, 'drinks-grid');
+      renderGrid(m.sides,  'sides-grid');
+    });
+}
+
+function renderGrid(items, id) {
+  var g = document.getElementById(id);
+  g.innerHTML = '';
+  items.forEach(function(it) {
+    var qty = cart[it.name] ? cart[it.name].qty : 0;
+    var d = document.createElement('div');
+    d.className = 'card' + (qty > 0 ? ' in-cart' : '');
+    d.id = 'card-' + it.name.replace(/\s/g,'_');
+    d.innerHTML =
+      '<div class="card-img">' + it.emoji + '</div>' +
+      '<div class="card-body">' +
+        '<div class="card-name">' + it.name + '</div>' +
+        '<div class="card-price">$' + Number(it.price).toFixed(2) + '</div>' +
+        (qty > 0
+          ? '<div class="card-qty-row">' +
+              '<button class="qty-btn minus" onclick="chg(event,\''+it.name+'\','+it.price+',-1)">−</button>' +
+              '<span class="qty-num">' + qty + '</span>' +
+              '<button class="qty-btn plus" onclick="chg(event,\''+it.name+'\','+it.price+',1)">+</button>' +
+            '</div>'
+          : '<div class="tap-hint">Tap to add</div>') +
+      '</div>';
+    d.addEventListener('click', function(e) {
+      if (!e.target.closest('.qty-btn')) addItem(it.name, it.price);
+    });
+    g.appendChild(d);
+  });
+}
+
+function addItem(name, price) {
+  if (!cart[name]) cart[name] = { price: Number(price), qty: 0 };
+  cart[name].qty++;
+  refreshMenuAndCart();
+}
+
+function chg(e, name, price, delta) {
+  e.stopPropagation();
+  if (!cart[name]) cart[name] = { price: Number(price), qty: 0 };
+  cart[name].qty += delta;
+  if (cart[name].qty <= 0) delete cart[name];
+  refreshMenuAndCart();
+}
+
+function refreshMenuAndCart() {
+  if (menu.food)   renderGrid(menu.food,   'food-grid');
+  if (menu.drinks) renderGrid(menu.drinks, 'drinks-grid');
+  if (menu.sides)  renderGrid(menu.sides,  'sides-grid');
+  var count = 0, total = 0;
+  Object.keys(cart).forEach(function(k){ count += cart[k].qty; total += cart[k].price * cart[k].qty; });
+  document.getElementById('cart-count-num').textContent = count;
+  document.getElementById('cart-price-display').textContent = '$' + total.toFixed(2);
+  document.getElementById('btn-checkout').disabled = (count === 0);
+}
+
+// ─── Tab switching ─────────────────────────────────────────────────────────────
+function switchTab(i) {
+  for (var j = 0; j < 4; j++) {
+    document.getElementById('sec' + j).style.display = (j === i) ? 'block' : 'none';
+    document.getElementById('tab' + j).className = 'tab' + (j === i ? ' active' : '');
+  }
+  document.getElementById('cart-bar').style.display = (i === 3) ? 'none' : 'block';
+  if (i === 3) renderReceipt();
+}
+
+// ─── Receipt ──────────────────────────────────────────────────────────────────
+function renderReceipt() {
+  var el = document.getElementById('receipt-content');
+  if (!lastReceipt) {
+    el.innerHTML = '<div class="r-empty"><div class="r-empty-icon">🧾</div><div class="r-empty-text">No receipt yet</div><div class="r-empty-sub">Place an order first!</div></div>';
+    return;
+  }
+  var r = lastReceipt;
+  var rows = '';
+  r.items.forEach(function(it) {
+    rows += '<div class="r-item"><span>' + it.name + ' ×' + it.qty + '</span><span class="r-item-price">$' + (it.price * it.qty).toFixed(2) + '</span></div>';
+  });
+  el.innerHTML =
+    '<div class="receipt-card">' +
+      '<div class="receipt-header-bar"><div class="r-logo">👨‍🍳</div><div class="r-brand">ZestyBite</div><div class="r-badge">✔ Order Placed!</div></div>' +
+      '<div class="receipt-body">' +
+        '<div class="r-info">' +
+          '<div class="r-row"><span class="lbl">Customer</span><strong>' + r.customer + '</strong></div>' +
+          '<div class="r-row"><span class="lbl">Order No</span><span>' + r.orderId + '</span></div>' +
+          '<div class="r-row"><span class="lbl">Service</span><span>' + r.service + '</span></div>' +
+          '<div class="r-row"><span class="lbl">Payment</span><span>' + r.payment + '</span></div>' +
+        '</div>' +
+        '<div class="r-items">' + rows + '</div>' +
+        '<div class="r-totals">' +
+          '<div class="r-total-row"><span>Subtotal</span><span>$' + r.subtotal.toFixed(2) + '</span></div>' +
+          '<div class="r-total-row"><span>Tax (5%)</span><span>$' + (r.subtotal * 0.05).toFixed(2) + '</span></div>' +
+          '<div class="r-grand"><span>Total</span><span class="val">$' + r.total.toFixed(2) + '</span></div>' +
+        '</div>' +
+        '<div class="r-footer"><p>Thank you, <b>' + r.customer + '</b>! 🍽</p><p style="margin-top:4px">See you again soon!</p></div>' +
+      '</div>' +
+    '</div>';
+}
+
+// ─── Checkout ─────────────────────────────────────────────────────────────────
+function openCheckout() {
+  // Build summary
+  var items = [];
+  var sub = 0;
+  Object.keys(cart).forEach(function(k) {
+    items.push({ name: k, price: cart[k].price, qty: cart[k].qty });
+    sub += cart[k].price * cart[k].qty;
+  });
+  var tax = sub * 0.05;
+  var total = sub + tax;
+
+  var rows = items.map(function(it) {
+    return '<div class="summary-row"><span class="label">' + it.name + ' ×' + it.qty + '</span><span>$' + (it.price * it.qty).toFixed(2) + '</span></div>';
+  }).join('');
+
+  document.getElementById('order-summary-box').innerHTML =
+    rows +
+    '<div class="summary-row"><span class="label">Subtotal</span><span>$' + sub.toFixed(2) + '</span></div>' +
+    '<div class="summary-row"><span class="label">Tax (5%)</span><span>$' + tax.toFixed(2) + '</span></div>' +
+    '<div class="summary-total"><span>Total</span><span class="val">$' + total.toFixed(2) + '</span></div>';
+
+  document.getElementById('checkout-form-view').style.display = 'block';
+  document.getElementById('success-view').style.display = 'none';
+  document.getElementById('checkout-modal').className = 'modal-overlay show';
+}
+
+function closeCheckout() {
+  document.getElementById('checkout-modal').className = 'modal-overlay';
+}
+
+function selSvc(el, val) {
+  svc = val;
+  ['pill-takeout','pill-dinein'].forEach(function(id){ document.getElementById(id).className = 'pill'; });
+  el.className = 'pill sel';
+}
+function selPay(el, val) {
+  pay = val;
+  ['pill-cash','pill-card'].forEach(function(id){ document.getElementById(id).className = 'pill'; });
+  el.className = 'pill sel';
+}
+
+function submitOrder() {
+  var items = [];
+  var sub = 0;
+  Object.keys(cart).forEach(function(k) {
+    items.push({ name: k, price: cart[k].price, qty: cart[k].qty });
+    sub += cart[k].price * cart[k].qty;
+  });
+  var payload = {
+    customer: customerName,
+    service: svc,
+    payment: pay,
+    items: items,
+    subtotal: sub,
+    tax: sub * 0.05,
+    total: sub + (sub * 0.05)
+  };
+
+  fetch('/api/order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(res) {
+    payload.orderId = res.orderId;
+    lastReceipt = payload;
+
+    document.getElementById('checkout-form-view').style.display = 'none';
+    document.getElementById('success-view').style.display = 'block';
+    document.getElementById('success-order-id').textContent = res.orderId;
+
+    cart = {};
+    refreshMenuAndCart();
+
+    setTimeout(function() {
+      closeCheckout();
+      switchTab(3);
+    }, 2800);
+  })
+  .catch(function() {
+    alert('Could not send order. Please check your connection.');
+  });
+}
+
+// ─── Register ─────────────────────────────────────────────────────────────────
+function showRegister() {
+  document.getElementById('register-modal').className = 'modal-overlay show';
+}
+function closeRegister() {
+  document.getElementById('register-modal').className = 'modal-overlay';
+}
+function doRegister() {
+  var user = document.getElementById('reg-user').value.trim();
+  var pass = document.getElementById('reg-pass').value;
+  var conf = document.getElementById('reg-conf').value;
+  var err  = document.getElementById('reg-error');
+  err.style.display = 'none';
+
+  if (!user)           { showErr(err, 'Username cannot be empty.'); return; }
+  if (pass.length < 3) { showErr(err, 'Password must be at least 3 characters.'); return; }
+  if (pass !== conf)   { showErr(err, 'Passwords do not match.'); return; }
+
+  var accs = loadAccounts();
+  if (accs.find(function(a){ return a.username.toLowerCase() === user.toLowerCase(); })) {
+    showErr(err, 'Username "' + user + '" already exists.'); return;
+  }
+  accs.push({ username: user, password: pass });
+  saveAccounts(accs);
+  closeRegister();
+  document.getElementById('inp-user').value = user;
+  document.getElementById('inp-pass').value = pass;
+  alert('Account created! You can now sign in.');
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function goToPage(id) {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+function showErr(el, msg) {
+  el.textContent = '⚠ ' + msg;
+  el.style.display = 'block';
+}
+
+// Enter key support
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Enter') return;
+  var active = document.querySelector('.page.active');
+  if (!active) return;
+  if (active.id === 'pg-login') doLogin();
+  else if (active.id === 'pg-name') doName();
+});
+</script>
+</body>
+</html>
