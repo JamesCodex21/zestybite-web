@@ -1,0 +1,21 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="100" fill="#ff8c00"/>
+  <!-- Bun top -->
+  <ellipse cx="256" cy="220" rx="110" ry="58" fill="#c8520a"/>
+  <ellipse cx="256" cy="205" rx="110" ry="60" fill="#e8954a"/>
+  <!-- Sesame seeds -->
+  <ellipse cx="226" cy="192" rx="9" ry="5" fill="#fff" opacity="0.5" transform="rotate(-20,226,192)"/>
+  <ellipse cx="260" cy="184" rx="9" ry="5" fill="#fff" opacity="0.5" transform="rotate(10,260,184)"/>
+  <ellipse cx="294" cy="192" rx="9" ry="5" fill="#fff" opacity="0.5" transform="rotate(-10,294,192)"/>
+  <!-- Lettuce -->
+  <ellipse cx="256" cy="264" rx="118" ry="18" fill="#4caf50"/>
+  <path d="M138 260 Q168 244 198 260 Q228 244 258 260 Q288 244 318 260 Q348 244 374 260 Q385 268 374 276 Q348 260 318 276 Q288 260 258 276 Q228 260 198 276 Q168 260 138 276 Z" fill="#66bb6a"/>
+  <!-- Cheese -->
+  <rect x="140" y="270" width="232" height="24" rx="5" fill="#ffc107"/>
+  <!-- Patty -->
+  <ellipse cx="256" cy="308" rx="116" ry="28" fill="#5d2e0c"/>
+  <ellipse cx="256" cy="300" rx="116" ry="28" fill="#7a3b10"/>
+  <!-- Bun bottom -->
+  <ellipse cx="256" cy="328" rx="116" ry="24" fill="#e8954a"/>
+  <ellipse cx="256" cy="340" rx="116" ry="18" fill="#c8520a"/>
+</svg>
